@@ -7,7 +7,6 @@ import '../../Models/pos_form_model.dart';
 import '../../Services/pos_services.dart';
 
 class HomeController extends GetxController {
-
   @override
   void onInit() async {
     super.onInit();
@@ -40,7 +39,8 @@ class HomeController extends GetxController {
   }
 
   Rx<ScrollController> scrollController = ScrollController().obs;
-  void scrollListener() async{
+
+  void scrollListener() async {
     if (scrollController.value.position.pixels ==
         scrollController.value.position.maxScrollExtent) {
       // Reached the end of the list, load more data
@@ -63,7 +63,7 @@ class HomeController extends GetxController {
 
     if (startIndex >= itemsList.length) {
       isLoadingItemsListPagination.value = false;
-      return ;
+      return;
     }
     if (endIndex > itemsList.length) {
       endIndex = itemsList.length;
@@ -75,7 +75,36 @@ class HomeController extends GetxController {
     isLoadingItemsListPagination.value = false;
   }
 
-  var selectedItems = [].obs;
+  var selectedItems = <ItemDetails>[].obs;
+
   var selectedPayment = [].obs;
 
+ double getTotal(){
+   double result =0.0;
+    for(int i =0; i<selectedItems.length;i++){
+      result+=double.parse(selectedItems[i].amount.toString()) * double.parse(selectedItems[i].price.toString()) ;
+    }
+    return result;
+  }
+}
+
+class ItemDetails {
+  String? name;
+
+  String? code;
+
+  String? unit;
+
+  int? amount;
+
+  double? price;
+
+
+  ItemDetails({
+     this.name,
+     this.code,
+     this.unit,
+     this.amount,
+     this.price,
+  });
 }

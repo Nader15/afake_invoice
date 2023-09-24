@@ -2,6 +2,7 @@
 //
 //     final posFormModel = posFormModelFromJson(jsonString);
 
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -534,7 +535,7 @@ class ItemsList {
   bool defaultUnit;
   bool defaultUnitSales;
   double unitId;
-  UnitName unitName;
+  String unitName;
   String barCode;
   BarcodeSeparator barcodeSeparator;
   bool exempt;
@@ -547,6 +548,7 @@ class ItemsList {
   int salesDiscountValue;
   bool automaticDiscountS;
   bool useTaxOnTableFees;
+  var amount = 0.obs;
 
   ItemsList({
     required this.groupId,
@@ -581,7 +583,7 @@ class ItemsList {
     defaultUnit: json["defaultUnit"],
     defaultUnitSales: json["defaultUnitSales"],
     unitId: json["unitId"],
-    unitName: unitNameValues.map[json["unitName"]]!,
+    unitName: json["unitName"],
     barCode: json["barCode"],
     barcodeSeparator: barcodeSeparatorValues.map[json["barcodeSeparator"]]!,
     exempt: json["exempt"],
@@ -605,7 +607,7 @@ class ItemsList {
     "defaultUnit": defaultUnit,
     "defaultUnitSales": defaultUnitSales,
     "unitId": unitId,
-    "unitName": unitNameValues.reverse[unitName],
+    "unitName": unitName,
     "barCode": barCode,
     "barcodeSeparator": barcodeSeparatorValues.reverse[barcodeSeparator],
     "exempt": exempt,
@@ -629,17 +631,7 @@ final barcodeSeparatorValues = EnumValues({
   "@": BarcodeSeparator.EMPTY
 });
 
-enum UnitName {
-  EMPTY,
-  PURPLE,
-  UNIT_NAME
-}
 
-final unitNameValues = EnumValues({
-  "عدد": UnitName.EMPTY,
-  "قطعة": UnitName.PURPLE,
-  "كرتونة": UnitName.UNIT_NAME
-});
 
 class PaymentTypeList {
   int bptId;

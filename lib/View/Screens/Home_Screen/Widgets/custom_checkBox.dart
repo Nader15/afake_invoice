@@ -6,7 +6,7 @@ class CustomCheckBox extends StatelessWidget {
   CustomCheckBox({Key? key, required this.title,  this.subtitle,  this.trailing, required this.onChanged, required this.selectBox}) : super(key: key);
   final String title;
   final String? subtitle;
-  final String? trailing;
+  final Widget? trailing;
   final ValueChanged<bool> onChanged;
 
   final bool selectBox;
@@ -29,10 +29,7 @@ class CustomCheckBox extends StatelessWidget {
         subtitle??"",
         style: const TextStyle(fontSize: 12),
       ),
-      trailing: Text(
-        trailing??"",
-        style: const TextStyle(fontSize: 12),
-      ),
+      trailing:trailing?? Container()
     );
   }
 }

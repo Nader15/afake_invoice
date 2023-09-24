@@ -79,18 +79,19 @@ class HomeScreen extends StatelessWidget {
                   if (homeController.isLoadingItemsListPagination.value)
                     const CustomCircleProgress(),
                   PaymentListWidget(),
-                  const SizedBox(height: 50),
                 ],
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
+                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 50),
                 child: CustomButton(
                   title: "الفاتورة",
                   backgroundColor: AppColors.MAIN_COLOR,
                   borderSideColor: AppColors.MAIN_COLOR,
                   foregroundColor: AppColors.WHITE_COLOR,
                   overlayColor: AppColors.WHITE_COLOR,
-                  onPress: () {},
+                  onPress: () {
+                    Get.toNamed(Routes.invoiceScreen);
+                  },
                 ),
               ),
             ],

@@ -17,9 +17,6 @@ class PaymentListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (homeController.isLoadingPosForm.value) {
-        return const CustomCircleProgress();
-      }
       if (homeController.posFormDataList[0].paymentTypeList.isEmpty) {
         return const SizedBox();
       } else {
@@ -40,14 +37,17 @@ class PaymentListWidget extends StatelessWidget {
                     return Obx(() {
                       final item = homeController.posFormDataList[0].paymentTypeList[index];
                       return CustomCheckBox(
-                        trailing: item.bptId.toString(),
+                        trailing: Text(
+                          item.bptId.toString(),
+                          style: const TextStyle(fontSize: 12),
+                        ),
                         title: item.paymentTypeName,
-                        selectBox: homeController.selectedPayment.contains(item.bptId),
+                        selectBox: homeController.selectedPayment.contains(item.paymentTypeName),
                         onChanged: (bool value) {
                           if (value) {
-                            homeController.selectedPayment.add(item.bptId);
+                            homeController.selectedPayment.add(item.paymentTypeName);
                           } else {
-                            homeController.selectedPayment.remove(item.bptId);
+                            homeController.selectedPayment.remove(item.paymentTypeName);
                           }
                           log("selectedPayment --> ${homeController.selectedPayment.toString()}");
                         },
