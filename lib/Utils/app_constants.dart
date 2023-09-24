@@ -3,7 +3,7 @@ import 'package:get_storage/get_storage.dart';
 
 class AppConstants {
 
-  static const String apiUrl = "https://bytrh.com";
+  static const String apiUrl = "https://back.afakyerp.com";
 
   String UserTocken = GetStorage().read<String>('AccessToken')??"";
   static double mediaHeight(context) => MediaQuery.of(context).size.height;

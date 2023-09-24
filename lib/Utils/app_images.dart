@@ -1,19 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
 class AppImages {
-  static const String bytrh_logo = "assets/images/bytrh_logo.jpeg";
-  static const String app_logo = "assets/images/app_logo.png";
-  static const String splash_background = "assets/images/splash_background.png";
-  static const String new_splash_background = "assets/images/new_splash_background.svg";
-  static const String background_white = "assets/images/background_white.png";
-  static const String OB_IMAGE1 = "assets/images/OB_IMAGE1.png";
-  static const String OB_IMAGE2 = "assets/images/OB_IMAGE2.png";
-  static const String OB_IMAGE3 = "assets/images/OB_IMAGE3.png";
-  static const String card_image = "assets/images/card_image.png";
-  static const String gift_card_image = "assets/images/gift_card_image.png";
-  static const String saudi_man_image = "assets/images/saudi_man_image.png";
-  static const String placeholder = 'assets/images/placeholder.jpg';
-  static const String user_placeholder = "assets/images/user_placeholder.png";
-  static const String sold_corner_image = "assets/images/sold_corner_image.png";
-  static const String sold_sign_image = "assets/images/sold_sign_image.png";
+  static const String background_image = "assets/images/background_image.jpg";
 }
