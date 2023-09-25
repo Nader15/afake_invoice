@@ -37,7 +37,7 @@ class LoginScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20,vertical: 50),
                   child: Text(
-                    "Login",
+                    "تسجيل الدخول",
                     style: TextStyle(color: AppColors.MAIN_COLOR, fontSize: 30),
                   ),
                 ),
@@ -56,11 +56,11 @@ class LoginScreen extends StatelessWidget {
                   children: [
                     CustomTextFieldWidget(
                       controller: authController.userNameController.value,
-                      hintText: "Enter User Name",
+                      hintText: "ادخل اسم المستخدم",
                     ),
                     CustomTextFieldWidget(
                       controller: authController.passwordController.value,
-                      hintText: "Enter Password",
+                      hintText: "ادخل كلمة المرور",
                     ),
                     SizedBox(height: 20),
 
@@ -68,7 +68,7 @@ class LoginScreen extends StatelessWidget {
                           () => ConditionalBuilder(
                         condition: !authController.isLogInLoading.value,
                         builder: (context) =>  CustomButton(
-                          title: "Sign in",
+                          title: "تسجيل دخول",
                           backgroundColor: AppColors.MAIN_COLOR,
                           borderSideColor: AppColors.MAIN_COLOR,
                           foregroundColor: AppColors.WHITE_COLOR,

@@ -356,17 +356,17 @@ class CompanyList {
 
 class CustomerList {
   double id;
-  SceType sceType;
+  String sceType;
   String code;
   String customerName;
   String tel1;
   String tel2;
   String mobile;
-  Fax fax;
-  EMail eMail;
-  Site site;
+  String fax;
+  String eMail;
+  String site;
   String address;
-  Notes notes;
+  String notes;
   bool posDefaultCusCash;
   String taxRegistrationNo;
   String vatNo;
@@ -391,17 +391,17 @@ class CustomerList {
 
   factory CustomerList.fromJson(Map<String, dynamic> json) => CustomerList(
     id: json["id"],
-    sceType: sceTypeValues.map[json["sceType"]]!,
+    sceType: json["sceType"],
     code: json["code"],
     customerName: json["customerName"],
     tel1: json["tel1"],
     tel2: json["tel2"],
     mobile: json["mobile"],
-    fax: faxValues.map[json["fax"]]!,
-    eMail: eMailValues.map[json["eMail"]]!,
-    site: siteValues.map[json["site"]]!,
+    fax: json["fax"],
+    eMail: json["eMail"],
+    site: json["site"],
     address: json["address"],
-    notes: notesValues.map[json["notes"]]!,
+    notes: json["notes"],
     posDefaultCusCash: json["posDefaultCusCash"],
     taxRegistrationNo: json["taxRegistrationNo"],
     vatNo: json["vatNo"],
@@ -409,102 +409,23 @@ class CustomerList {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "sceType": sceTypeValues.reverse[sceType],
+    "sceType": sceType,
     "code": code,
     "customerName": customerName,
     "tel1": tel1,
     "tel2": tel2,
     "mobile": mobile,
-    "fax": faxValues.reverse[fax],
-    "eMail": eMailValues.reverse[eMail],
-    "site": siteValues.reverse[site],
+    "fax": fax,
+    "eMail": eMail,
+    "site": site,
     "address": address,
-    "notes": notesValues.reverse[notes],
+    "notes": notes,
     "posDefaultCusCash": posDefaultCusCash,
     "taxRegistrationNo": taxRegistrationNo,
     "vatNo": vatNo,
   };
 }
 
-enum EMail {
-  EMPTY,
-  E_MAIL,
-  MOHAMEDNAGDY257_GMAIL_COM,
-  MOHAMEDNAGDY_GMAIL_COM,
-  MOHAMEDNAGDY_INAME_COM,
-  SASAS
-}
-
-final eMailValues = EnumValues({
-  "": EMail.EMPTY,
-  "ويةيي": EMail.E_MAIL,
-  "mohamednagdy257@gmail.com": EMail.MOHAMEDNAGDY257_GMAIL_COM,
-  "mohamednagdy@gmail.com": EMail.MOHAMEDNAGDY_GMAIL_COM,
-  "mohamednagdy@iname.com": EMail.MOHAMEDNAGDY_INAME_COM,
-  "sasas": EMail.SASAS
-});
-
-enum Fax {
-  EMPTY,
-  FAX,
-  SASAS,
-  THE_0123214934314,
-  THE_01558400064,
-  THE_0999333443
-}
-
-final faxValues = EnumValues({
-  "": Fax.EMPTY,
-  "يوب": Fax.FAX,
-  "sasas": Fax.SASAS,
-  "0123214934314": Fax.THE_0123214934314,
-  "01558400064": Fax.THE_01558400064,
-  "0999333443": Fax.THE_0999333443
-});
-
-enum Notes {
-  ANY_NOTE,
-  DSADSADSA,
-  EMPTY,
-  MY_NOTE,
-  NOTE,
-  NOTES
-}
-
-final notesValues = EnumValues({
-  "any note": Notes.ANY_NOTE,
-  "dsadsadsa": Notes.DSADSADSA,
-  "": Notes.EMPTY,
-  "my note": Notes.MY_NOTE,
-  "note": Notes.NOTE,
-  "ؤةيءظ": Notes.NOTES
-});
-
-enum SceType {
-  CUSTOMER
-}
-
-final sceTypeValues = EnumValues({
-  "عميل - Customer": SceType.CUSTOMER
-});
-
-enum Site {
-  EMPTY,
-  SASAS,
-  SITE,
-  WWW,
-  WWW_GOOGLE_COM,
-  WWW_MOHAMED_COM
-}
-
-final siteValues = EnumValues({
-  "": Site.EMPTY,
-  "sasas": Site.SASAS,
-  "وروى": Site.SITE,
-  "www": Site.WWW,
-  "www.google.com": Site.WWW_GOOGLE_COM,
-  "www.Mohamed.com": Site.WWW_MOHAMED_COM
-});
 
 class InvoiceHodeList {
   double invoiceId;

@@ -6,8 +6,8 @@ class AppColors {
   static const Color BLUE_COLOR = Colors.blue;
   // static const Color MAIN_COLOR = Color(0xff1B578D);
   static const Color MAIN_COLOR = Color(0xff8054A1);
-  // static const Color SECOND_COLOR = Color(0xffFAAA40);
-  static const Color SECOND_COLOR = Color(0xff8054A1);
+  static const Color SECOND_COLOR = Color(0xff1B578D);
+  // static const Color SECOND_COLOR = Color(0xff8054A1);
   static const Color NEW_GREY_COLOR = Color(0xffD2D2D2);
   static const Color TEAL_COLOR = Color(0xff66B9B1);
   static const Color PURPLE_COLOR = Color(0xff8054A1);
