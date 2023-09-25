@@ -53,10 +53,8 @@ class PaymentTypeSelectionWidget extends StatelessWidget {
                           title: homeController.posFormDataList[0]
                               .paymentTypeList[index].paymentTypeName,
                           onPress: () {
-                            homeController.paymentIndex.value =
-                                homeController.posFormDataList[0]
-                                    .paymentTypeList[index].bptId;
-                            log("paymentIndex --> ${homeController.paymentIndex.value}");
+                            homeController.paymentIndex.value = homeController.posFormDataList[0].paymentTypeList[index].bptId;
+                            homeController.selectedPaymentMethod = homeController.posFormDataList[0].paymentTypeList[index];
                           },
                         );
                       },

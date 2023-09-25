@@ -79,19 +79,25 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.center,
-                            color: AppColors.MAIN_COLOR,
-                            child: Text(
-                              "دفع",
-                              style: TextStyle(color: AppColors.WHITE_COLOR),
-                            ),
-                          ),
-                        ),
-                      ),
+                          child: Obx(
+                        () => homeController.isLoadingAddInvoice.value
+                            ? CustomCircleProgress()
+                            : InkWell(
+                                onTap: () {
+                                  homeController.addInvoice();
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 10),
+                                  alignment: Alignment.center,
+                                  color: AppColors.MAIN_COLOR,
+                                  child: Text(
+                                    "دفع",
+                                    style:
+                                        TextStyle(color: AppColors.WHITE_COLOR),
+                                  ),
+                                ),
+                              ),
+                      )),
                       Expanded(
                         child: Container(
                           padding: EdgeInsets.symmetric(vertical: 10),
@@ -100,9 +106,10 @@ class HomeScreen extends StatelessWidget {
                           child: GetBuilder(
                             init: HomeController(),
                             builder: (_) => Obx(() => Text(
-                              homeController.getTotal().toString(),
-                              style: TextStyle(color: AppColors.WHITE_COLOR),
-                            )),
+                                  homeController.getTotal().toString(),
+                                  style:
+                                      TextStyle(color: AppColors.WHITE_COLOR),
+                                )),
                           ),
                         ),
                       ),
@@ -130,5 +137,4 @@ class HomeScreen extends StatelessWidget {
       ),
     );
   }
-
 }

@@ -73,15 +73,15 @@ class InvoiceWidget extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              invoiceHeader(item.name ?? "",
+                              invoiceHeader(item.itemName ?? "",
                                   width: AppConstants.mediaWidth(context) / 5,
                                   alignment: Alignment.centerRight),
                               invoiceHeader(
-                                item.code ?? "",
+                                item.itemCode ?? "",
                                 width: 50,
                               ),
-                              invoiceHeader(item.unit ?? ""),
-                              invoiceHeader(item.amount.toString()),
+                              invoiceHeader(item.unitName ?? ""),
+                              invoiceHeader(item.quantity.toString()),
                               invoiceHeader(item.price.toString(), width: 50),
                               increaseAmountWidget(
                                 index,
@@ -152,8 +152,8 @@ class InvoiceWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
-              homeController.selectedItems[index].amount =
-                  homeController.selectedItems[index].amount! + 1;
+              homeController.selectedItems[index].quantity =
+                  homeController.selectedItems[index].quantity! + 1;
               homeController.update();
             },
           ),
@@ -162,7 +162,7 @@ class InvoiceWidget extends StatelessWidget {
             height: 20,
             child: Container(
               alignment: Alignment.center,
-              child: Text(homeController.selectedItems[index].amount.toString()),
+              child: Text(homeController.selectedItems[index].quantity.toString()),
             ),
           ),
           const SizedBox(width: 10),
@@ -178,14 +178,14 @@ class InvoiceWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
-              homeController.selectedItems[index].amount =
-                  homeController.selectedItems[index].amount! - 1;
+              homeController.selectedItems[index].quantity =
+                  homeController.selectedItems[index].quantity! - 1;
               homeController.update();
-              if (homeController.selectedItems[index].amount== 0) {
+              if (homeController.selectedItems[index].quantity== 0) {
                 homeController.selectedItems
                     .removeWhere((element) =>
-                homeController.selectedItems[index].code ==
-                    element.code);
+                homeController.selectedItems[index].itemCode ==
+                    element.itemCode);
               }
             },
           ),

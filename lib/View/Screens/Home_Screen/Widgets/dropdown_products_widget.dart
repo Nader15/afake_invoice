@@ -52,11 +52,11 @@ class DropDownProductsWidget extends StatelessWidget {
                   onChanged: (ItemsList? newValue) async{
                     log("newValue --> ${newValue!.itemId}");
                     homeController.selectedItems.add(
-                      ItemDetails(
-                        name: newValue!.itemName,
-                        code: newValue.itemCode,
-                        unit: newValue.unitName,
-                        amount: 1,
+                      InvoiceDetails(
+                        itemName: newValue.itemName,
+                        itemCode: newValue.itemCode,
+                        unitName: newValue.unitName,
+                        quantity: 1,
                         price: double.parse(newValue.salesValue.toString()),
                       ),
                     );
