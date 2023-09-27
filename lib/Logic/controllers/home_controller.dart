@@ -30,14 +30,48 @@ class HomeController extends GetxController {
       var result = await PosServices.getPosForm();
       if (result.isSuccess) {
         posFormDataList.value = result.data;
+      selectCustomer.value = result.data[0].customerList.first;
+      selectStore.value = result.data[0].storesList.first;
+        selectPayment(0);
       }
     } finally {
       isLoadingPosForm(false);
     }
   }
+
+  int nextId = 1;  // Initial ID
+
+  addProduct(ItemsList newValue)async{
+    nextId++;
+    selectedItems.add(
+      InvoiceDetails(
+        id: nextId,
+        itemId: newValue.itemId.toInt(),
+        unitId: newValue.unitId.toInt(),
+        total: double.parse(newValue.salesValue.toString()),
+        netPrice: double.parse(newValue.salesValue.toString()),
+        storeId: selectStore.value?.storeId !=null ?selectStore.value?.storeId?.toInt():0,
+        itemName: newValue.itemName,
+        itemCode: newValue.itemCode,
+        unitName: newValue.unitName,
+        quantity: 1,
+        price: double.parse(newValue.salesValue.toString()),
+      ),
+    );
+    getTotal();
+    selectedItems.forEach((element) {
+      log("selectedItems --> ${element.toJson()}");
+    });
+    log("getTotal() --> ${getTotal()}");
+    selectedPayment.forEach((element) {
+      log("selectedItems --> ${element["paymentValue"]=getTotal()}");
+    });
+    log("selectedPayment --> ${selectedPayment.toJson()}");
+  }
+
   ItemsList? selectItem;
-  CustomerList? selectCustomer;
-  StoresList? selectStore;
+  Rx<CustomerList?> selectCustomer = CustomerList().obs;
+  Rx<StoresList?> selectStore=StoresList().obs;
   PaymentTypeList? selectedPaymentMethod;
 
   var selectedItems = <InvoiceDetails>[].obs;
@@ -54,50 +88,61 @@ class HomeController extends GetxController {
 
   final paymentIndex = 0.obs;
 
+
+ selectPayment(int index){
+   Map<String, dynamic> updatedMap = {};
+   paymentIndex.value = index;
+   selectedPaymentMethod = posFormDataList[0].paymentTypeList[index];
+   updatedMap = {
+     "paymentId": selectedPaymentMethod!.toJson()["bptId"],
+     "paymentType": selectedPaymentMethod!.toJson()["bptId"],
+     "paymentValue": getTotal(),
+   };
+   selectedPayment.clear();
+   selectedPayment.add(updatedMap);
+   log("selectedPayment --> ${selectedPayment.toJson()}");
+ }
+
   var isLoadingAddInvoice = false.obs;
 
   addInvoice() async {
     try {
       isLoadingAddInvoice(true);
-      if(selectedItems.isEmpty){
-        showSnackbar(
-            title: "*note",
-            message: "من فضلك حدد المنتجات",
-            backgroundColor: AppColors.RED_COLOR,
-            icon: Icons.error_outline
-        );
-      }else if(selectCustomer==null){
-        showSnackbar(
-            title: "*note",
-            message: "من فضلك حدد العملاء",
-            backgroundColor: AppColors.RED_COLOR,
-            icon: Icons.error_outline
-        );
-      }else if(selectStore==null){
-        showSnackbar(
-            title: "*note",
-            message: "من فضلك حدد المخازن",
-            backgroundColor: AppColors.RED_COLOR,
-            icon: Icons.error_outline
-        );
-      }else if(selectedPaymentMethod==null){
-        showSnackbar(
-            title: "*note",
-            message: "من فضلك حدد طريقة الدفع",
-            backgroundColor: AppColors.RED_COLOR,
-            icon: Icons.error_outline
-        );
-      }
-      else{
+      // if(selectedItems.isEmpty){
+      //   showSnackbar(
+      //       title: "*note",
+      //       message: "من فضلك حدد المنتجات",
+      //       backgroundColor: AppColors.RED_COLOR,
+      //       icon: Icons.error_outline
+      //   );
+      // }else if(selectCustomer==null){
+      //   showSnackbar(
+      //       title: "*note",
+      //       message: "من فضلك حدد العملاء",
+      //       backgroundColor: AppColors.RED_COLOR,
+      //       icon: Icons.error_outline
+      //   );
+      // }else if(selectStore==null){
+      //   showSnackbar(
+      //       title: "*note",
+      //       message: "من فضلك حدد المخازن",
+      //       backgroundColor: AppColors.RED_COLOR,
+      //       icon: Icons.error_outline
+      //   );
+      // }else if(selectedPaymentMethod==null){
+      //   showSnackbar(
+      //       title: "*note",
+      //       message: "من فضلك حدد طريقة الدفع",
+      //       backgroundColor: AppColors.RED_COLOR,
+      //       icon: Icons.error_outline
+      //   );
+      // }
+      // else{
         var result = await PosServices.addInvoice(
-          customerId: selectCustomer!.id.toString(),
+          customerId: selectCustomer.value!.id !=null ?"${selectCustomer.value!.id}":"0",
           total: getTotal().toString(),
-          amountPaid: getTotal().toString(),
-          remainingAmount: "0",
-          invoiceType: "10",
           invoiceDetailsList: selectedItems,
-          paymentId: selectedPaymentMethod!.bptId.toString(),
-          paymentValue: getTotal().toString(),
+          invoicePaymentList: selectedPayment,
         );
         if (!result.isSuccess) {
           showSnackbar(
@@ -106,7 +151,8 @@ class HomeController extends GetxController {
               backgroundColor: AppColors.RED_COLOR,
               icon: Icons.error_outline
           );
-        }      }
+        }
+      // }
     } finally {
       isLoadingAddInvoice(false);
     }
@@ -137,15 +183,15 @@ class ItemDetails {
 }
 
 class InvoiceDetails {
+  int? id;
+  int? invoiceType;
   int? itemId;
-
   int? unitId;
-
   int? quantity;
-
-  int? storeId;
-
   double? price;
+  double? total;
+  double? netPrice;
+  int? storeId;
 
   String? itemName;
   String? itemCode;
@@ -153,6 +199,10 @@ class InvoiceDetails {
 
 
   InvoiceDetails({
+    this.id,
+    this.invoiceType =10,
+    this.total,
+    this.netPrice,
     this.itemId,
     this.unitId,
     this.quantity,
@@ -165,7 +215,11 @@ class InvoiceDetails {
   });
 
   factory InvoiceDetails.fromJson(Map<String, dynamic> json) => InvoiceDetails(
+    id: json["id"],
+    invoiceType: json["invoiceType"],
     itemId: json["itemId"],
+    total: json["total"],
+    netPrice: json["netPrice"],
     unitId: json["unitId"],
     quantity: json["quantity"],
     storeId: json["storeId"],
@@ -173,7 +227,11 @@ class InvoiceDetails {
   );
 
   Map<String, dynamic> toJson() => {
+    "id": id,
     "itemId": itemId,
+    "invoiceType": invoiceType,
+    "total": total,
+    "netPrice": netPrice,
     "unitId": unitId,
     "quantity": quantity,
     "storeId": storeId,

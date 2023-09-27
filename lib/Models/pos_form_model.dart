@@ -355,38 +355,38 @@ class CompanyList {
 }
 
 class CustomerList {
-  double id;
-  String sceType;
-  String code;
-  String customerName;
-  String tel1;
-  String tel2;
-  String mobile;
-  String fax;
-  String eMail;
-  String site;
-  String address;
-  String notes;
-  bool posDefaultCusCash;
-  String taxRegistrationNo;
-  String vatNo;
+  double? id;
+  String? sceType;
+  String? code;
+  String? customerName;
+  String? tel1;
+  String? tel2;
+  String? mobile;
+  String? fax;
+  String? eMail;
+  String? site;
+  String? address;
+  String? notes;
+  bool? posDefaultCusCash;
+  String? taxRegistrationNo;
+  String? vatNo;
 
   CustomerList({
-    required this.id,
-    required this.sceType,
-    required this.code,
-    required this.customerName,
-    required this.tel1,
-    required this.tel2,
-    required this.mobile,
-    required this.fax,
-    required this.eMail,
-    required this.site,
-    required this.address,
-    required this.notes,
-    required this.posDefaultCusCash,
-    required this.taxRegistrationNo,
-    required this.vatNo,
+     this.id,
+     this.sceType,
+     this.code,
+     this.customerName,
+     this.tel1,
+     this.tel2,
+     this.mobile,
+     this.fax,
+     this.eMail,
+     this.site,
+     this.address,
+     this.notes,
+     this.posDefaultCusCash,
+     this.taxRegistrationNo,
+     this.vatNo,
   });
 
   factory CustomerList.fromJson(Map<String, dynamic> json) => CustomerList(
@@ -555,21 +555,25 @@ final barcodeSeparatorValues = EnumValues({
 
 
 class PaymentTypeList {
-  int bptId;
+  int paymentId;
+  int? paymentType;
+  String? paymentValue;
   String paymentTypeName;
 
   PaymentTypeList({
-    required this.bptId,
+    required this.paymentId,
+     this.paymentType,
+     this.paymentValue,
     required this.paymentTypeName,
   });
 
   factory PaymentTypeList.fromJson(Map<String, dynamic> json) => PaymentTypeList(
-    bptId: json["bptId"],
+    paymentId: json["bptId"],
     paymentTypeName: json["paymentTypeName"],
   );
 
   Map<String, dynamic> toJson() => {
-    "bptId": bptId,
+    "bptId": paymentId,
     "paymentTypeName": paymentTypeName,
   };
 }
@@ -599,16 +603,16 @@ class Salesmen {
 }
 
 class StoresList {
-  bool defaultStore;
-  double storeId;
-  String storeCode;
-  String storeName;
+  bool? defaultStore;
+  double? storeId;
+  String? storeCode;
+  String? storeName;
 
   StoresList({
-    required this.defaultStore,
-    required this.storeId,
-    required this.storeCode,
-    required this.storeName,
+     this.defaultStore,
+     this.storeId,
+     this.storeCode,
+     this.storeName,
   });
 
   factory StoresList.fromJson(Map<String, dynamic> json) => StoresList(

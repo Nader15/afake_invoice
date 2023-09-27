@@ -152,9 +152,12 @@ class InvoiceWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
-              homeController.selectedItems[index].quantity =
-                  homeController.selectedItems[index].quantity! + 1;
+              homeController.selectedItems[index].quantity = homeController.selectedItems[index].quantity! + 1;
+              homeController.selectedItems[index].total = homeController.selectedItems[index].quantity! * homeController.selectedItems[index].price!;
+              homeController.selectedItems[index].netPrice = homeController.selectedItems[index].quantity! * homeController.selectedItems[index].price!;
+              homeController.selectedPayment.forEach((element) => element["paymentValue"] =homeController.getTotal(),);
               homeController.update();
+
             },
           ),
           const SizedBox(width: 10),
@@ -178,14 +181,14 @@ class InvoiceWidget extends StatelessWidget {
               ),
             ),
             onTap: () {
-              homeController.selectedItems[index].quantity =
-                  homeController.selectedItems[index].quantity! - 1;
+              homeController.selectedItems[index].quantity = homeController.selectedItems[index].quantity! - 1;
+              homeController.selectedItems[index].total = homeController.selectedItems[index].quantity! * homeController.selectedItems[index].price!;
+              homeController.selectedItems[index].netPrice = homeController.selectedItems[index].quantity! * homeController.selectedItems[index].price!;
+              homeController.selectedPayment.forEach((element) => element["paymentValue"] =homeController.getTotal(),);
               homeController.update();
               if (homeController.selectedItems[index].quantity== 0) {
-                homeController.selectedItems
-                    .removeWhere((element) =>
-                homeController.selectedItems[index].itemCode ==
-                    element.itemCode);
+                homeController.selectedItems.removeWhere((element) =>
+                homeController.selectedItems[index].itemCode == element.itemCode);
               }
             },
           ),

@@ -24,7 +24,7 @@ class DropDownStoresWidget extends StatelessWidget {
           if (homeController.posFormDataList[0].storesList.isEmpty) {
             return const Text('لايوجد مخازن متاحة'); // Handle the case when itemsList is empty
           }
-          return Expanded(child: SizedBox(
+          return SizedBox(
             // height: 40,
             child: Container(
               decoration: BoxDecoration(
@@ -35,13 +35,14 @@ class DropDownStoresWidget extends StatelessWidget {
               child:  DropdownButtonHideUnderline(
                 child: DropdownButton2<StoresList>(
                   itemHighlightColor: Colors.white,
-                  value: homeController.selectStore,
+                  value: homeController.selectStore.value,
                   hint:  Text(
                     'المخازن',
                     style: TextStyle(
                       color: AppColors.BLACK_COLOR,
                     ),
                   ),
+
                   icon:  SizedBox(),
                   buttonHeight: 40,
                   style: TextStyle(fontSize: 12),
@@ -50,19 +51,20 @@ class DropDownStoresWidget extends StatelessWidget {
                     color: Colors.grey.shade200,
                   ),
                   onChanged: (StoresList? newValue) {
-                    homeController.selectStore = newValue;
-
+                    homeController.selectStore.value = newValue;
+                    homeController.selectedItems.forEach((element) => element.storeId =newValue!.storeId!.toInt());
                   },
                   items: homeController.posFormDataList[0].storesList.map<DropdownMenuItem<StoresList>>((StoresList value) {
                     return DropdownMenuItem<StoresList>(
                       value: value,
-                      child: SizedBox(
-                        width: 50,
+                      child: Container(
+                        // width: 50,
                         child: Text(
                           '${value.storeName}',
                           style:  TextStyle(
                               color: AppColors.BLACK_COLOR,
-                              fontSize: 10
+                              fontSize: 10,
+                              overflow: TextOverflow.ellipsis
                             // backgroundColor: whiteColor,
                           ),
                         ),
@@ -72,7 +74,7 @@ class DropDownStoresWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ));
+          );
         });
   }
 }

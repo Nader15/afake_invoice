@@ -40,40 +40,50 @@ class PosServices {
 
   static Future<AddInvoiceModel> addInvoice({
     required String customerId,
-    required String invoiceType,
     required String total,
-    required String amountPaid,
-    required String remainingAmount,
-    required String paymentId,
-    required String paymentValue,
     required List<InvoiceDetails> invoiceDetailsList,
+    required List invoicePaymentList,
   }) async {
     var response = await http.post(
       Uri.parse(AppConstants.apiUrl + '/API/PosForm/' + 'Add'),
       body: jsonEncode({
+        "posPintAfterSave": true,
         "sceId": customerId,
-        "invoiceType": invoiceType,
-        "description": "",
+        "invoiceType": 10,
+        "description": "string",
+        "currencyId": 1,
+        "rate": 1,
         "total": total,
-        "amountPaid": amountPaid,
-        "remainingAmount": remainingAmount,
+        "netTotal": total,
+        "amountPaid": total,
+        "remainingAmount": 0,
+        "type": 1,
         "invoiceDetails": invoiceDetailsList,
-        "invoicePayment": [
-          {
-            "paymentId": paymentId,
-            "paymentType": paymentId,
-            "paymentValue": paymentValue,
-            "accountId": "10"
-          }
-        ]
+        "invoicePayment": invoicePaymentList
       }),
       headers: {
         'Content-Type': 'application/json',
         HttpHeaders.authorizationHeader: AppConstants().UserTocken
       },
     );
+    log("${jsonEncode({
+      "posPintAfterSave": true,
+      "sceId": customerId,
+      "invoiceType": 10,
+      "description": "string",
+      "currencyId": 1,
+      "rate": 1,
+      "total": total,
+      "netTotal": total,
+      "amountPaid": total,
+      "remainingAmount": 0,
+      "type": 1,
+      "invoiceDetails": invoiceDetailsList,
+      "invoicePayment": invoicePaymentList
+    })}");
     var jsonData = response.body;
     log("Add Invoice Api --> $jsonData");
+
     return addInvoiceModelJson(jsonData);
   }
 }

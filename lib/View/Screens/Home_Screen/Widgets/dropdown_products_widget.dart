@@ -35,7 +35,7 @@ class DropDownProductsWidget extends StatelessWidget {
               child:  DropdownButtonHideUnderline(
                 child: DropdownButton2<ItemsList>(
                   itemHighlightColor: Colors.white,
-                  value: homeController.selectItem,
+                  // value: homeController.selectItem,
                   hint:  Text(
                     'المنتجات',
                     style: TextStyle(
@@ -44,23 +44,13 @@ class DropDownProductsWidget extends StatelessWidget {
                   ),
                   icon:  SizedBox(),
                   buttonHeight: 40,
-                  style: TextStyle(fontSize: 12),
+                  style: TextStyle(fontSize: 10),
                   dropdownDecoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(1),
                     color: Colors.grey.shade200,
                   ),
                   onChanged: (ItemsList? newValue) async{
-                    log("newValue --> ${newValue!.itemId}");
-                    homeController.selectedItems.add(
-                      InvoiceDetails(
-                        itemName: newValue.itemName,
-                        itemCode: newValue.itemCode,
-                        unitName: newValue.unitName,
-                        quantity: 1,
-                        price: double.parse(newValue.salesValue.toString()),
-                      ),
-                    );
-                    await    homeController.getTotal();
+                    homeController.addProduct(newValue!);
                   },
                   items: homeController.posFormDataList[0].itemsList.map<DropdownMenuItem<ItemsList>>((ItemsList value) {
                     return DropdownMenuItem<ItemsList>(

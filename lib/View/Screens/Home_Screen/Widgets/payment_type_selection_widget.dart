@@ -1,14 +1,7 @@
-import 'dart:developer';
-
 import 'package:afake_invoice/Utils/app_colors.dart';
-import 'package:afake_invoice/View/Widgets/custom_circle_progress.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import '../../../../Logic/controllers/home_controller.dart';
-import '../../../../Models/pos_form_model.dart';
-import '../../../../Utils/app_constants.dart';
 
 class PaymentTypeSelectionWidget extends StatelessWidget {
   PaymentTypeSelectionWidget({Key? key}) : super(key: key);
@@ -32,8 +25,8 @@ class PaymentTypeSelectionWidget extends StatelessWidget {
                   if (homeController.posFormDataList.isEmpty) {
                     return const SizedBox();
                   }
-                  if (homeController.posFormDataList[0].itemsList.isEmpty) {
-                    return const Text('لايوجد منتجات متاحة'); // Handle the case when itemsList is empty
+                  if (homeController.posFormDataList[0].paymentTypeList.isEmpty) {
+                    return const Text('لايوجد طرق دفع متاحة'); // Handle the case when itemsList is empty
                   }
                   return Expanded(child: SizedBox(
                     height: 30,
@@ -46,15 +39,11 @@ class PaymentTypeSelectionWidget extends StatelessWidget {
                       physics: const BouncingScrollPhysics(),
                       itemBuilder: (BuildContext context, index) {
                         /// set total count page
-                        // initCategory.setTotalCountPage(categoryBox.data!.last.id);
                         return selection(
-                          homeController.posFormDataList[0]
-                              .paymentTypeList[index].bptId,
-                          title: homeController.posFormDataList[0]
-                              .paymentTypeList[index].paymentTypeName,
+                          index,
+                          title: homeController.posFormDataList[0].paymentTypeList[index].paymentTypeName,
                           onPress: () {
-                            homeController.paymentIndex.value = homeController.posFormDataList[0].paymentTypeList[index].bptId;
-                            homeController.selectedPaymentMethod = homeController.posFormDataList[0].paymentTypeList[index];
+                            homeController.selectPayment(index);
                           },
                         );
                       },

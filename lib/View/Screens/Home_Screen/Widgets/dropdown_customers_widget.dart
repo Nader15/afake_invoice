@@ -24,7 +24,7 @@ class DropDownCustomersWidget extends StatelessWidget {
           if (homeController.posFormDataList[0].customerList.isEmpty) {
             return const Text('لايوجد عملاء متاحين'); // Handle the case when itemsList is empty
           }
-          return Expanded(child: SizedBox(
+          return SizedBox(
             // height: 40,
             child: Container(
               decoration: BoxDecoration(
@@ -35,7 +35,7 @@ class DropDownCustomersWidget extends StatelessWidget {
               child:  DropdownButtonHideUnderline(
                 child: DropdownButton2<CustomerList>(
                   itemHighlightColor: Colors.white,
-                  value: homeController.selectCustomer,
+                  value: homeController.selectCustomer.value,
                   hint:  Text(
                     'العملاء',
                     style: TextStyle(
@@ -50,8 +50,7 @@ class DropDownCustomersWidget extends StatelessWidget {
                     color: Colors.grey.shade200,
                   ),
                   onChanged: (CustomerList? newValue) {
-                    homeController.selectCustomer = newValue;
-
+                    homeController.selectCustomer.value = newValue;
                   },
                   items: homeController.posFormDataList[0].customerList.map<DropdownMenuItem<CustomerList>>((CustomerList value) {
                     return DropdownMenuItem<CustomerList>(
@@ -72,7 +71,7 @@ class DropDownCustomersWidget extends StatelessWidget {
                 ),
               ),
             ),
-          ));
+          );
         });
   }
 }
