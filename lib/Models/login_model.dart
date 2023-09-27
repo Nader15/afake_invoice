@@ -2,6 +2,8 @@
 //
 //     final loginModel = loginModelFromJson(jsonString);
 
+import 'dart:developer';
+
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
@@ -10,30 +12,42 @@ LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
 class LoginModel {
-  Data data;
+  Data? data;
   int status;
   String message;
   bool isSuccess;
-  String token;
+  String? token;
 
   LoginModel({
-    required this.data,
+     this.data,
     required this.status,
     required this.message,
     required this.isSuccess,
-    required this.token,
+     this.token,
   });
 
-  factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    data: Data.fromJson(json["data"]),
-    status: json["status"],
-    message: json["message"],
-    isSuccess: json["isSuccess"],
-    token: json["token"],
-  );
+  factory LoginModel.fromJson(Map<String, dynamic> json){
+    if (!json['isSuccess']) {
+      return LoginModel(
+        // data: Data.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        isSuccess: json["isSuccess"],
+        // token: json["token"],
+      );
+    }else{
+      return LoginModel(
+        data: Data.fromJson(json["data"]),
+        status: json["status"],
+        message: json["message"],
+        isSuccess: json["isSuccess"],
+        token: json["token"],
+      );
+    }
+  }
 
   Map<String, dynamic> toJson() => {
-    "data": data.toJson(),
+    "data": data!.toJson(),
     "status": status,
     "message": message,
     "isSuccess": isSuccess,

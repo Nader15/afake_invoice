@@ -25,18 +25,9 @@ class AuthServices {
     var decodedData = jsonDecode(data.body);
     log("API RESPONSE --> ${decodedData.toString()}");
     if (decodedData['isSuccess']) {
-      // if (kDebugMode) {
-      //   log(decodedData);
-      // }
       return LoginModel.fromJson(jsonData);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(seconds: 2),
-          content: Text(decodedData["ApiMsg"].toString()),
-        ),
-      );
-      return throw Exception(decodedData["ApiMsg"].toString());
+      return LoginModel.fromJson(jsonData);
     }
   }
 }

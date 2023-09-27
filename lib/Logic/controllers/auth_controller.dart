@@ -43,6 +43,7 @@ class AuthController extends GetxController {
         Password,
         context,
       );
+      log("isSuccess --> ${loginModel.message}");
       if (loginModel.isSuccess) {
         log(
           loginModel.message,
