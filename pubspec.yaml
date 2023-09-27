@@ -24,6 +24,7 @@ dependencies:
   intl: ^0.18.0
   syncfusion_flutter_barcodes: ^23.1.38
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

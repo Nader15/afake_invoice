@@ -20,11 +20,6 @@ class InvoiceScreen extends StatelessWidget {
         backgroundColor: AppColors.SECOND_COLOR,
         title: Text("الفاتورة"),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        backgroundColor: AppColors.SECOND_COLOR,
-        child: Icon(Icons.share),
-      ),
       body: SafeArea(
         child: Obx(
           () => SingleChildScrollView(
