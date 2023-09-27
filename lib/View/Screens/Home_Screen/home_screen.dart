@@ -60,59 +60,112 @@ class HomeScreen extends StatelessWidget {
                       // PaymentListWidget(),
                     ],
                   ),
-                  Row(
+                  Column(
                     children: [
-                      Expanded(
-                        child: InkWell(
-                          onTap: () {
-                            homeController.selectedItems.clear();
-                          },
-                          child: Container(
-                            padding: EdgeInsets.symmetric(vertical: 10),
-                            alignment: Alignment.center,
-                            color: AppColors.RED_COLOR,
-                            child: Text(
-                              "الغاء",
-                              style: TextStyle(color: AppColors.WHITE_COLOR),
-                            ),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                          child: Obx(
-                        () => homeController.isLoadingAddInvoice.value
-                            ? CustomCircleProgress()
-                            : InkWell(
-                                onTap: () {
-                                  homeController.addInvoice();
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10),
-                                  alignment: Alignment.center,
-                                  color: AppColors.MAIN_COLOR,
-                                  child: Text(
-                                    "دفع",
-                                    style:
-                                        TextStyle(color: AppColors.WHITE_COLOR),
-                                  ),
-                                ),
-                              ),
-                      )),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10),
-                          alignment: Alignment.center,
-                          color: AppColors.SECOND_COLOR,
-                          child: GetBuilder(
-                            init: HomeController(),
-                            builder: (_) => Obx(() => Text(
-                                  homeController.getTotal().toString(),
+                      GetBuilder(
+                        init: HomeController(),
+                        builder: (_) => Container(
+                        padding: EdgeInsets.symmetric(vertical: 10),
+                        alignment: Alignment.center,
+                        color: AppColors.SECOND_COLOR,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "الإجمالي",
                                   style:
                                       TextStyle(color: AppColors.WHITE_COLOR),
-                                )),
-                          ),
+                                ),
+
+                                  Text(
+                                    "${(homeController.getTotal()).toString()}",
+                                    style:
+                                        TextStyle(color: AppColors.WHITE_COLOR),
+
+                                ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "الخصم",
+                                  style:
+                                      TextStyle(color: AppColors.WHITE_COLOR),
+                                ),
+                                Text(
+                                  "0",
+                                  style:
+                                      TextStyle(color: AppColors.WHITE_COLOR),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
+                      ),),
+                      SizedBox(
+                        height: 10,
                       ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: InkWell(
+                              onTap: () {
+                                homeController.selectedItems.clear();
+                                homeController.update();
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(vertical: 10),
+                                alignment: Alignment.center,
+                                color: AppColors.RED_COLOR,
+                                child: Text(
+                                  "الغاء",
+                                  style:
+                                      TextStyle(color: AppColors.WHITE_COLOR),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Obx(
+                              () => homeController.isLoadingAddInvoice.value
+                                  ? CustomCircleProgress()
+                                  : InkWell(
+                                      onTap: () {
+                                        homeController.addInvoice();
+                                      },
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 10),
+                                        alignment: Alignment.center,
+                                        color: AppColors.MAIN_COLOR,
+                                        child: Text(
+                                          "دفع",
+                                          style: TextStyle(
+                                              color: AppColors.WHITE_COLOR),
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              alignment: Alignment.center,
+                              color: AppColors.SECOND_COLOR, 
+                              child: GetBuilder(
+                                init: HomeController(),
+                                builder: (_) => Obx(() => Text(
+                                      "${(homeController.getTotal()) }",
+                                      style: TextStyle(
+                                          color: AppColors.WHITE_COLOR),
+                                    )),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   )
                 ],

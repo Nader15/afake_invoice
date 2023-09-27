@@ -56,7 +56,7 @@ class InvoiceWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         SizedBox(
-          height: AppConstants.mediaHeight(context)/1.5,
+          height: AppConstants.mediaHeight(context)/1.8,
           child: ListView.separated(
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),

@@ -66,24 +66,13 @@ class PosServices {
         HttpHeaders.authorizationHeader: AppConstants().UserTocken
       },
     );
-    log("${jsonEncode({
-      "posPintAfterSave": true,
-      "sceId": customerId,
-      "invoiceType": 10,
-      "description": "string",
-      "currencyId": 1,
-      "rate": 1,
-      "total": total,
-      "netTotal": total,
-      "amountPaid": total,
-      "remainingAmount": 0,
-      "type": 1,
-      "invoiceDetails": invoiceDetailsList,
-      "invoicePayment": invoicePaymentList
-    })}");
     var jsonData = response.body;
-    log("Add Invoice Api --> $jsonData");
-
-    return addInvoiceModelJson(jsonData);
+    var decodedData = jsonDecode(jsonData);
+    if (decodedData['isSuccess']) {
+      return addInvoiceModelJson(jsonData);
+    }
+    else{
+      return addInvoiceModelJson(jsonData);
+    }
   }
 }

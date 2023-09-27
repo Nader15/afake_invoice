@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:afake_invoice/Routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../Models/add_invoice_model.dart';
 import '../../Models/login_model.dart';
 import '../../Models/pos_form_model.dart';
 import '../../Services/pos_services.dart';
@@ -59,14 +61,10 @@ class HomeController extends GetxController {
       ),
     );
     getTotal();
-    selectedItems.forEach((element) {
-      log("selectedItems --> ${element.toJson()}");
-    });
-    log("getTotal() --> ${getTotal()}");
     selectedPayment.forEach((element) {
       log("selectedItems --> ${element["paymentValue"]=getTotal()}");
     });
-    log("selectedPayment --> ${selectedPayment.toJson()}");
+    update();
   }
 
   ItemsList? selectItem;
@@ -104,47 +102,29 @@ class HomeController extends GetxController {
  }
 
   var isLoadingAddInvoice = false.obs;
+  Rx<DataAdded> dataAdded = DataAdded().obs;
+
 
   addInvoice() async {
     try {
       isLoadingAddInvoice(true);
-      // if(selectedItems.isEmpty){
-      //   showSnackbar(
-      //       title: "*note",
-      //       message: "من فضلك حدد المنتجات",
-      //       backgroundColor: AppColors.RED_COLOR,
-      //       icon: Icons.error_outline
-      //   );
-      // }else if(selectCustomer==null){
-      //   showSnackbar(
-      //       title: "*note",
-      //       message: "من فضلك حدد العملاء",
-      //       backgroundColor: AppColors.RED_COLOR,
-      //       icon: Icons.error_outline
-      //   );
-      // }else if(selectStore==null){
-      //   showSnackbar(
-      //       title: "*note",
-      //       message: "من فضلك حدد المخازن",
-      //       backgroundColor: AppColors.RED_COLOR,
-      //       icon: Icons.error_outline
-      //   );
-      // }else if(selectedPaymentMethod==null){
-      //   showSnackbar(
-      //       title: "*note",
-      //       message: "من فضلك حدد طريقة الدفع",
-      //       backgroundColor: AppColors.RED_COLOR,
-      //       icon: Icons.error_outline
-      //   );
-      // }
-      // else{
         var result = await PosServices.addInvoice(
           customerId: selectCustomer.value!.id !=null ?"${selectCustomer.value!.id}":"0",
-          total: getTotal().toString(),
+          total: (getTotal()).toString(),
           invoiceDetailsList: selectedItems,
           invoicePaymentList: selectedPayment,
         );
-        if (!result.isSuccess) {
+      if(result.isSuccess){
+        dataAdded.value = result.data!;
+        showSnackbar(
+            title: AppStrings.API_RESPONSE,
+            message: result.message,
+            backgroundColor: AppColors.GREEN_COLOR,
+            icon: Icons.verified_user_rounded
+        );
+        Get.toNamed(Routes.invoiceScreen);
+      }
+        else {
           showSnackbar(
               title: AppStrings.API_RESPONSE,
               message: result.message,
@@ -152,7 +132,6 @@ class HomeController extends GetxController {
               icon: Icons.error_outline
           );
         }
-      // }
     } finally {
       isLoadingAddInvoice(false);
     }
